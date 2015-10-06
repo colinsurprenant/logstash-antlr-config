@@ -1,0 +1,37 @@
+group 'testgroup'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'antlr'
+apply plugin: 'idea'
+apply plugin: 'application'
+
+ext.antlr = [
+        grammarpackage: "com.logstash",
+]
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile group: "org.antlr", name: "antlr4-runtime", version: "4.5.1-1"
+    antlr group: "org.antlr", name: "antlr4", version: "4.5.1-1"
+}
+
+task getHomeDir << {
+    println gradle.gradleHomeDir
+}
+
+task getClassPath << {
+    println sourceSets.main.runtimeClasspath.asPath
+}
+
+// application & fun config
+
+mainClassName = "com.logstash.TestParser"
+
+run {
+    standardInput = System.in
+}
